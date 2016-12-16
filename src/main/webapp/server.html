@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="server">
+<head>
+    <meta charset="UTF-8">
+    <title>Server</title>
+    <link rel="stylesheet" href="lib/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="lib/css/ng-grid.min.css" />
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-resource.min.js"></script>
+    <script src="lib/ui-bootstrap-tpls.min.js"></script>
+    <script src="lib/ng-grid-2.0.11.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <script src="script/server.js"></script>
+    <!-- endbuild -->
+</head>
+<body ng-controller="serverController">
+<label>Name</label>
+<input type="text" ng-model="pilot_name" name="text"/>
+<label>Plain</label>
+<input type="text" ng-model="plain" name="text"/>
+<label>Port</label>
+<input type="text" ng-model="port" name="text"/>
+<button ng-click = "start()">Start</button>
+<button ng-click="stop()" >Stop</button>
+<button ng-click="logOutF()">Log out</button>
+</body>
+</html>
