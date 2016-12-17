@@ -4,6 +4,7 @@ import com.server.entities.Record;
 
 import javax.ejb.Local;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,11 +17,8 @@ public interface RecordDao {
 
     void deleteRecord(Record record);
 
-    List<Record> getAllRecords();
+    Collection<Record> getAllRecords();
 
     Record findRecord(int rId);
 
-    List<Record> findRecordsByUser(String userName);
-
-    List<Record> findRecordsByDate(Date date);
 }

@@ -14,7 +14,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.xml.registry.infomodel.User;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashMap;
 
 import com.server.socket.proc.SocketCustom;
@@ -131,8 +133,20 @@ public class ServerRest extends Application {
     public void saveUser(@PathParam("name") String userName, String data) {
         JSONObject json = new JSONObject(data);
         Users user = new Users(userName,checkRole(json.getString("role")),
-                json.getString("login"),json.getString("pass"));
+                json.getString("login"),json.getString("password"));
         userDao.savePerson(user);
+    }
+
+    @GET
+    @Path("/get-all-users/")
+    public Collection<Users> getAllUsers(){
+        return userDao.getAll();
+    }
+
+    @GET
+    @Path("/get-all-records/")
+    public Collection<Record> getAllRecords(){
+        return recordDao.getAllRecords();
     }
 
 

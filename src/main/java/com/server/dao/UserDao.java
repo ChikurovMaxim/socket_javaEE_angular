@@ -1,9 +1,9 @@
 package com.server.dao;
 
-import com.server.entities.Role;
 import com.server.entities.Users;
 
 import javax.ejb.Local;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ public interface UserDao {
 
     void deletePerson(Users person);
 
-    List getAll();
+    Collection<Users> getAll();
 
     Users getUserIdByAuthData(String login, String password);
 

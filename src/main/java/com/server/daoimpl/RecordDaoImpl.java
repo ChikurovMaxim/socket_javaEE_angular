@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public class RecordDaoImpl implements RecordDao{
     }
 
     @Override
-    public List<Record> getAllRecords() {
+    public Collection<Record> getAllRecords() {
         Query q = entityManager.createQuery("SELECT r FROM Record r");
         return q.getResultList();
     }
@@ -65,20 +66,6 @@ public class RecordDaoImpl implements RecordDao{
         }catch (NoResultException e ){
             return null;
         }
-    }
-
-    @Override
-    public List<Record> findRecordsByUser(String userName) {
-        Query q = entityManager.createQuery("SELECT r FROM Record r WHERE r.user = :user_name");
-        q.setParameter("user_name" , userName);
-        return q.getResultList();
-    }
-
-    @Override
-    public List<Record> findRecordsByDate(Date date) {
-        Query q = entityManager.createQuery("SELECT r FROM Record r WHERE r.date = :date");
-        q.setParameter("date" , date);
-        return q.getResultList();
     }
 }
 

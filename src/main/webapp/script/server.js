@@ -1,10 +1,15 @@
 var app = angular.module('server', ['ngResource', 'ui.bootstrap']);
 
-app.controller('serverController', function ($scope, isLogIn, startResource, stopResource, logOut,$window) {
+app.controller('serverController', function ($scope, isLogIn, startResource, stopResource, logOut
+    , $window, saveUser, getAllRecords, getAllUser, deleteRecord, deleteUser) {
 
     $scope.pilot_name = null;
     $scope.port = null;
     $scope.plain = null;
+    $scope.saveUserName = null;
+    $scope.saveUserRole = null;
+    $scope.saveUserLogin = null;
+    $scope.saveUserPassword = null;
 
     isLogedIn();
     function isLogedIn(){
@@ -39,6 +44,68 @@ app.controller('serverController', function ($scope, isLogIn, startResource, sto
         $window.location.href = '../socket-1.0-SNAPSHOT/login.html';
     };
 
+    $scope.saveUser = function () {
+        var data = {role:$scope.saveUserRole,login:$scope.saveUserLogin,password:$scope.saveUserPassword};
+        $scope.saveUserP = saveUser.save({name:$scope.saveUserName},data).$promise.then(
+            function(){
+                $scope.userSaved = true;
+            },
+            function () {
+                $scope.userSaved = false;
+            }
+        );
+    };
+
+    $scope.getAllUsersF = function(){
+        $scope.usersGet = getAllUser.get();
+        //     .$promise.then(
+        //     function(){
+        //         $scope.usersGet =
+        //     }
+        // )
+    };
+
+    $scope.getAllRecordsF = function(){
+        $scope.recordsGet = getAllRecords.get();
+    };
+
+    $scope.deleteUserF = function (userId){
+        deleteUser.delete({id:userId}).$promise.then(
+            function () {
+                $scope.isRemovedUser = true;
+            },
+            function(){
+                $scope.isRemovedUser = false;
+            }
+        );
+    };
+
+    $scope.deleteRecordF = function (recordId){
+        deleteRecord.delete({id:recordId}).$promise.then(
+            function () {
+                $scope.isRemovedRecord = true;
+            },
+            function(){
+                $scope.isRemovedRecord = false;
+            }
+        );
+    }
+
+});
+app.factory('deleteRecord',function($resource){
+    return $resource('resources/server/delete-record/:id');
+});
+app.factory('deleteUser',function($resource){
+    return $resource('resources/server/delete-user/:id');
+});
+app.factory('saveUser',function($resource){
+    return $resource('resources/server/user-save/:name');
+});
+app.factory('getAllUsers',function($resource){
+    return $resource('resources/server/get-all-users/');
+});
+app.factory('getAllRecords',function($resource){
+    return $resource('resources/server/get-all-records/');
 });
 app.factory('isLogIn',function($resource){
     return $resource('resources/server/logedIn/');

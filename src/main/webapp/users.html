@@ -2,14 +2,18 @@
 <html lang="en" ng-app="server">
 <head>
     <meta charset="UTF-8">
-    <title>Server</title>
-    <link rel="stylesheet" href="lib/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="lib/css/ng-grid.min.css" />
+    <title>Plains</title>
+    <link rel="stylesheet" href="lib/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="lib/css/ng-grid.min.css"/>
+    <link rel="stylesheet" href="css/menu.css"/>
+    <link rel="stylesheet" href="css/news.css"/>
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
     <script src="lib/jquery.min.js"></script>
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-resource.min.js"></script>
     <script src="lib/ui-bootstrap-tpls.min.js"></script>
     <script src="lib/ng-grid-2.0.11.min.js"></script>
+    <script src="lib/ng-table.min.js"></script>
 
     <script src="script/server.js"></script>
     <script src="script/menu.js"></script>
@@ -26,14 +30,16 @@
         <button  id ="logOutButton" class="loginButton" ng-click="logout()">Log Out</button>
     </ul>
 </div>
-<label>Name</label>
-    <input type="text" ng-model="pilot_name" name="text"/>
-<label>Plain</label>
-    <input type="text" ng-model="plain" name="text"/>
-<label>Port</label>
-    <input type="text" ng-model="port" name="text"/>
-    <button ng-click = "start()">Start</button>
-    <button ng-click="stop()" >Stop</button>
-<   button ng-click="logOutF()">Log out</button>
+<div class = "page"  ng-controller="serverController">
+    <div class="content" ng-repeat="user in users">
+        <div class="topic">{{user.name}}</div>
+        <div class="topic">{{user.role}}</div>
+        <button id="removeB" class="button" ng-click="removeUser(company.id)">Remove</button>
+        <button id="editB" class="button" ng-click="editUser(company.id)">Edit</button>
+    </div>
+</div>
+<div class="message">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+</div>
 </body>
 </html>

@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,7 +70,7 @@ public class UserDAOImpl implements UserDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Users> getAll() {
+    public Collection<Users> getAll() {
         Query q = entityManager.createQuery("select p from Users p");
         return q.getResultList();
     }

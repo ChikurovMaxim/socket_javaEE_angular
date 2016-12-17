@@ -15,6 +15,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import java.util.Collection;
 import java.util.List;
 
 import com.server.entities.Users;
@@ -43,7 +44,7 @@ public class PlainMetricsRest extends Application {
     @Path("/get-plains")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<PlainModel> getAllPlains() {
+    public Collection<PlainModel> getAllPlains() {
         return plainModelDao.findAll();
     }
 
