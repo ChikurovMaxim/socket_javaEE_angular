@@ -2,13 +2,24 @@ body {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
     background-color: #f6fcff;
 }
 
 h3 {
     margin: 0 0 20px;
     text-align: left;
+}
+button{
+    margin: 1%;
+}
+
+input, label {
+    display:block;
+    margin: 1%;
+    width: 200px;
+}
+.formServer{
+    align-items: center;
 }
 
 .message {

@@ -1,7 +1,7 @@
 var app = angular.module('server', ['ngResource', 'ui.bootstrap']);
 
 app.controller('serverController', function ($scope, isLogIn, startResource, stopResource, logOut
-    , $window, saveUser, getAllRecords, getAllUser, deleteRecord, deleteUser) {
+    , $window, saveUser, getAllRecords, getAllUsers, deleteRecord, deleteUser) {
 
     $scope.pilot_name = null;
     $scope.port = null;
@@ -13,14 +13,8 @@ app.controller('serverController', function ($scope, isLogIn, startResource, sto
 
     isLogedIn();
     function isLogedIn(){
-        $scope.logedPerson = isLogIn.get().$promise.then(
-            function(){
-                $scope.isLoged = true;
-            },
-            function(){
-                $window.location.href = '../socket-1.0-SNAPSHOT/login.html';
-            }
-        );
+        $scope.logedPerson = isLogIn.get();
+        if($scope.logedPerson === null)$window.location.href = '../socket-1.0-SNAPSHOT/login.html';
     }
 
     $scope.start = function () {
@@ -57,7 +51,7 @@ app.controller('serverController', function ($scope, isLogIn, startResource, sto
     };
 
     $scope.getAllUsersF = function(){
-        $scope.usersGet = getAllUser.get();
+        $scope.usersGet = getAllUsers.get();
         //     .$promise.then(
         //     function(){
         //         $scope.usersGet =

@@ -9,6 +9,9 @@
 .menuLi {
     float: left;
 }
+.menuLiR {
+    float: right;
+}
 
 .menuLi a {
     display: inline-block;

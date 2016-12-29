@@ -1,10 +1,11 @@
 var app = angular.module('server', ['ngTable','ngResource', 'ui.bootstrap']);
 
-app.controller('plainController', function ($scope,NgTableParams,deletePlain,deleteMetric,
+app.controller('plainController', function (isLogIn,$window,$scope,NgTableParams,deletePlain,deleteMetric,
                                             savePlain,saveMetric,getAllPlains,getAllMetrics) {
     $scope.plains = this;
-    var plainData = getAllPlains.get();
-    $scope.plains.tableParams = new NgTableParams({}, { dataset: plainData});
+    $scope.plainData = getAllPlains.get();
+    $scope.plains.tableParams = new NgTableParams({}, { dataset: $scope.plainData});
+
 
     $scope.savePlainName = null;
 
@@ -13,9 +14,16 @@ app.controller('plainController', function ($scope,NgTableParams,deletePlain,del
 
     $scope.getMetricsByPlain = function(plainId) {
         $scope.metrics = this;
-        var metricDate = getAllMetrics({id:plainId});
-        $scope.metrics.tableParams = new NgTableParams({}, {dataset: metricDate});
+        $scope.metricData = getAllMetrics({id:plainId});
+        $scope.metrics.tableParams = new NgTableParams({}, {dataset: metricData});
     };
+
+    isLogedIn();
+    function isLogedIn(){
+        $scope.logedPerson = isLogIn.get();
+        if($scope.logedPerson === null)$window.location.href = '../socket-1.0-SNAPSHOT/login.html';
+    }
+
 
     $scope.savePlain = function(){
         $scope.savePl = savePlain.save({plainName:$scope.savePlainName});
@@ -51,4 +59,7 @@ app.factory('getAllPlains',function($resource){
 });
 app.factory('getAllMetrics',function($resource){
     return $resource('resources/plainmetric/get-plain-metrics/:id');
+});
+app.factory('isLogIn',function($resource){
+    return $resource('resources/server/logedIn/');
 });

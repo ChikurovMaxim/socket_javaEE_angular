@@ -13,27 +13,36 @@
 
     <script src="script/server.js"></script>
     <script src="script/menu.js"></script>
+    <link rel="stylesheet" href="css/menu.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+
     <!-- endbuild -->
 </head>
 <body ng-controller="serverController">
-<div>
-    <ul class="menuUl" ng-controller="navCtrl">
-        <li id="formsLi" class="menuLi" ng-class="navClass('forms')"><a href='users.html'>Users</a></li>
-        <li class="menuLi" ng-class="navClass('articles')"><a href='plains.html'>Plains</a></li>
-        <li class="menuLi" ng-class="navClass('articles')"><a href='server.html'>Records</a></li>
+<div class="formServer">
+    <ul class="menuUl" ng-controller="menu">
+        <li id="formsLi" class="menuLi" ng-class="navClass('users')"><a href='users.html'>Users</a></li>
+        <li class="menuLi" ng-class="navClass('plains')"><a href='plains.html'>Plains</a></li>
+        <li class="menuLi" ng-class="navClass('records')"><a href='server.html'>Records</a></li>
         <li class="logedP" id="logedName" ng-class="navClass('logedP')">
-            {{logedPerson.name}}</li>
-        <button  id ="logOutButton" class="loginButton" ng-click="logout()">Log Out</button>
+            {{logedPerson.name}}
+        </li>
+        <li class="menuLiR"><button class = "logout" ng-click="logOutF()">Log out</button></li>
     </ul>
 </div>
-<label>Name</label>
+<div style="margin: 5%">
+    <hi>Server Acts</hi>
+    <label>Name</label>
     <input type="text" ng-model="pilot_name" name="text"/>
-<label>Plain</label>
+    <label>Plain</label>
     <input type="text" ng-model="plain" name="text"/>
-<label>Port</label>
+    <label>Port</label>
     <input type="text" ng-model="port" name="text"/>
-    <button ng-click = "start()">Start</button>
-    <button ng-click="stop()" >Stop</button>
-<   button ng-click="logOutF()">Log out</button>
+    <button ng-click="start()">Start</button>
+    <button ng-click="stop()">Stop</button>
+</div>
+
+
+
 </body>
 </html>

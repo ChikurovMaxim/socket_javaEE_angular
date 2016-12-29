@@ -31,7 +31,7 @@ public class MetricDaoImpl implements MetricsDao {
 
     @Override
     public Metric saveMetric(Metric metric) {
-        Metric newMetric = new Metric(metric.getName(),metric.getPlainModel());
+        Metric newMetric = new Metric(metric.getName(),metric.getValue(),metric.getPlainModel());
         entityManager.persist(newMetric);
         return newMetric;
     }

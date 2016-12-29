@@ -32,7 +32,7 @@ public class Metric implements Serializable {
     private Double value;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID")
+    @JoinColumn(name = "ID", insertable = false, updatable = false)
     private PlainModel plainModel;
 
     public int getId() {

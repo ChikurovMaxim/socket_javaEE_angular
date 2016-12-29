@@ -41,6 +41,7 @@ public class PlainModelDaoImpl implements PlainModelDao {
 
     @Override
     @SuppressWarnings("unchecked")
+    @Transactional
     public List<PlainModel> findAll() {
         Query q = entityManager.createQuery("SELECT p FROM PlainModel p");
         return q.getResultList();
