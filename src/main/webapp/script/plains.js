@@ -2,9 +2,11 @@ var app = angular.module('server', ['ngTable','ngResource', 'ui.bootstrap']);
 
 app.controller('plainController', function (isLogIn,$window,$scope,NgTableParams,deletePlain,deleteMetric,
                                             savePlain,saveMetric,getAllPlains,getAllMetrics) {
+
+    $scope.plainSelected = false;
     $scope.plains = this;
-    $scope.plainData = getAllPlains.get();
-    $scope.plains.tableParams = new NgTableParams({}, { dataset: $scope.plainData});
+    $scope.plainData = getAllPlains.query();
+    $scope.plains.tableParams = new NgTableParams({}, {dataset: $scope.plainData});
 
 
     $scope.savePlainName = null;
@@ -13,8 +15,9 @@ app.controller('plainController', function (isLogIn,$window,$scope,NgTableParams
     $scope.saveMetricValue = null;
 
     $scope.getMetricsByPlain = function(plainId) {
+        $scope.plainSelected = true;
         $scope.metrics = this;
-        $scope.metricData = getAllMetrics({id:plainId});
+        $scope.metricData = getAllMetrics.query({id:plainId});
         $scope.metrics.tableParams = new NgTableParams({}, {dataset: metricData});
     };
 

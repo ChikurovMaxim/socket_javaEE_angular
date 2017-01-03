@@ -23,7 +23,7 @@
 <body ng-controller="plainController">
 <div class="formServer">
     <ul class="menuUl" ng-controller="menu">
-        <li id="formsLi" class="menuLi" ng-class="navClass('forms')"><a href='users.html'>Users</a></li>
+        <li id="formsLi" class="menuLi" ng-class="navClass('users')"><a href='users.html'>Users</a></li>
         <li class="menuLi" ng-class="navClass('plains')"><a href='plains.html'>Plains</a></li>
         <li class="menuLi" ng-class="navClass('records')"><a href='server.html'>Records</a></li>
         <li class="logedP" id="logedName" ng-class="navClass('logedP')">
@@ -32,13 +32,16 @@
         <li class="menuLiR"><button class = "logout" ng-click="logOutF()">Log out</button></li>
     </ul>
 </div>
-<table ng-table="plains.tableParams" class="table" show-filter="true">
-    <tr ng-repeat="plain in plainData">
-        <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
-            {{plain.name}}</td>
-    </tr>
-</table>
-<div ng-if="plainSelected">
+<div class="grid">
+    <table ng-table="plains.tableParams" class="table" show-filter="true">
+        <tr ng-repeat="plain in plainData" ng-click="getMetricsByPlain(plain.id)">
+            <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+                {{plain.name}}
+            </td>
+        </tr>
+    </table>
+</div>
+<div ng-if="plainSelected" class="grid">
     <table ng-table="metrics.tableParams" class="table" show-filter="true">
         <tr ng-repeat="metric in metricData">
             <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">

@@ -37,7 +37,6 @@ public class Users implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
 
-
     public int getId() {
         return id;
     }

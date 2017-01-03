@@ -2,7 +2,6 @@ package com.server.socket;
 
 import com.server.dao.MetricsDao;
 import com.server.dao.PlainModelDao;
-import com.server.dao.RecordDao;
 import com.server.dao.UserDao;
 import com.server.entities.Metric;
 import com.server.entities.PlainModel;
@@ -53,7 +52,7 @@ public class PlainMetricsRest extends Application {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public List<Metric> getPlainMetrics(@PathParam("id") int id) {
-        return plainModelDao.getPlainMetrics(plainModelDao.findPlainModel(id));
+        return (List<Metric>) metricsDao.getPlainMetric(plainModelDao.findPlainModel(id));
     }
 
     @POST

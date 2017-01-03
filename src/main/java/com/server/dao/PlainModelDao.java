@@ -22,5 +22,4 @@ public interface PlainModelDao {
 
     PlainModel findPlainModel(String name);
 
-    List<Metric> getPlainMetrics(PlainModel plainModel);
 }

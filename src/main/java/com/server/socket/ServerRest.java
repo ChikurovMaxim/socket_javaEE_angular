@@ -57,8 +57,8 @@ public class ServerRest extends Application {
         }
     }
 
-    private void enrichRecord(String name, String plain) {
-        record.setUser(name);
+    private void enrichRecord(Users user, String plain) {
+        record.setUser(user);
         record.setDate(LocalDateTime.now());
         record.setPlainModel(plain);
         recordDao.saveRecord(record);
@@ -90,7 +90,7 @@ public class ServerRest extends Application {
     public String stop(@PathParam("stop") boolean stop) {
         if (stop) {
             socketConnection.stop();
-            enrichRecord(json.get(PILOT_NAME), json.get(PLAIN_MODEL));
+            enrichRecord(userDao.findUserByName(json.get(PILOT_NAME)), json.get(PLAIN_MODEL));
         }
         return "Stop!";
     }
@@ -149,5 +149,10 @@ public class ServerRest extends Application {
         return recordDao.getAllRecords();
     }
 
+    @POST
+    @Path("/get-all-user-records")
+    public Collection<Record> getRecordsForUser(int id){
+        return recordDao.getRecordsForUser(userDao.findPerson(id));
+    }
 
 }

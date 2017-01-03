@@ -16,8 +16,9 @@ public class Record implements Serializable{
     @Column(name = "RECORD_ID", unique = true, nullable = false)
     private int Id;
 
-    @Column(name = "USER_NAME")
-    private String user;
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID", insertable = false, updatable = false)
+    private Users user;
 
     @Column(name = "DATE")
     private LocalDateTime date;
@@ -31,7 +32,7 @@ public class Record implements Serializable{
     public Record() {
     }
 
-    public Record(LocalDateTime date, String simData, String user, String plainModel) {
+    public Record(LocalDateTime date, String simData, Users user, String plainModel) {
         this.date = date;
         this.user = user;
         this.plainModel = plainModel;
@@ -57,11 +58,11 @@ public class Record implements Serializable{
         this.simData = simData;
     }
 
-    public String getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 
@@ -81,9 +82,9 @@ public class Record implements Serializable{
         Record record = (Record) o;
 
         if (Id != record.Id) return false;
+        if (user != null ? !user.equals(record.user) : record.user != null) return false;
         if (date != null ? !date.equals(record.date) : record.date != null) return false;
         if (simData != null ? !simData.equals(record.simData) : record.simData != null) return false;
-        if (user != null ? !user.equals(record.user) : record.user != null) return false;
         return plainModel != null ? plainModel.equals(record.plainModel) : record.plainModel == null;
 
     }
@@ -91,9 +92,9 @@ public class Record implements Serializable{
     @Override
     public int hashCode() {
         int result = Id;
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (simData != null ? simData.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (plainModel != null ? plainModel.hashCode() : 0);
         return result;
     }

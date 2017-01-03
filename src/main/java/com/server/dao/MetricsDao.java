@@ -4,6 +4,7 @@ import com.server.entities.Metric;
 import com.server.entities.PlainModel;
 
 import javax.ejb.Local;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,4 +23,7 @@ public interface MetricsDao {
 
     Double getStandartValue(Metric metric);
 
+    Collection<Metric> getPlainMetric(int id);
+
+    Collection<Metric> getPlainMetric(PlainModel p);
 }

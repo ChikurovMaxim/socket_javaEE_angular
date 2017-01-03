@@ -1,7 +1,6 @@
 package com.server.daoimpl;
 
 import com.server.dao.MetricsDao;
-import com.server.dao.RecordDao;
 import com.server.entities.Metric;
 import com.server.entities.PlainModel;
 
@@ -10,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -62,5 +62,19 @@ public class MetricDaoImpl implements MetricsDao {
     @Override
     public Double getStandartValue(Metric metric) {
         return findById(metric.getId()).getValue();
+    }
+
+    @Override
+    public Collection<Metric> getPlainMetric(int id) {
+        Query q = entityManager.createQuery("SELECT m FROM Metric m WHERE m.plainModel = :plain");
+        q.setParameter("plain",id);
+        return q.getResultList();
+    }
+
+    @Override
+    public Collection<Metric> getPlainMetric(PlainModel p) {
+        Query q = entityManager.createQuery("SELECT m FROM Metric m WHERE m.plainModel = :plain");
+        q.setParameter("plain",p);
+        return q.getResultList();
     }
 }

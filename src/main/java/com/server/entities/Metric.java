@@ -31,7 +31,7 @@ public class Metric implements Serializable {
     @Column(name = "VALUE")
     private Double value;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "ID", insertable = false, updatable = false)
     private PlainModel plainModel;
 

@@ -1,6 +1,7 @@
 package com.server.dao;
 
 import com.server.entities.Record;
+import com.server.entities.Users;
 
 import javax.ejb.Local;
 import java.sql.Date;
@@ -21,4 +22,5 @@ public interface RecordDao {
 
     Record findRecord(int rId);
 
+    Collection<Record> getRecordsForUser(Users user);
 }

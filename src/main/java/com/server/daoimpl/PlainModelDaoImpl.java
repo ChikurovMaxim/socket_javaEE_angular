@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Maksym on 29.11.2016.
  */
 @Stateless
-@EJB(name = "java:global/TopicDAOImpl",
+@EJB(name = "java:global/PlainModelDaoImpl",
         beanInterface = PlainModelDao.class, beanName = "PlainModelDaoImpl")
 public class PlainModelDaoImpl implements PlainModelDao {
 
@@ -61,8 +61,4 @@ public class PlainModelDaoImpl implements PlainModelDao {
         return (PlainModel) q.getSingleResult();
     }
 
-    @Override
-    public List<Metric> getPlainMetrics(PlainModel plainModel) {
-        return (List<Metric>) findPlainModel(plainModel.getId()).getMetrics();
-    }
 }

@@ -3,6 +3,7 @@ package com.server.daoimpl;
 
 import com.server.dao.RecordDao;
 import com.server.entities.Record;
+import com.server.entities.Users;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -11,6 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import javax.xml.registry.infomodel.User;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
@@ -66,6 +68,13 @@ public class RecordDaoImpl implements RecordDao{
         }catch (NoResultException e ){
             return null;
         }
+    }
+
+    @Override
+    public Collection<Record> getRecordsForUser(Users user) {
+        Query q = entityManager.createQuery("SELECT r FROM Record r WHERE r.user = :user");
+        q.setParameter("user", user);
+        return q.getResultList();
     }
 }
 

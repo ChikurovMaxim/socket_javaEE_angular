@@ -1,7 +1,7 @@
-var app = angular.module('server', ['ngResource', 'ui.bootstrap']);
+var app = angular.module('server', ['ngTable','ngResource', 'ui.bootstrap']);
 
 app.controller('serverController', function ($scope, isLogIn, startResource, stopResource, logOut
-    , $window, saveUser, getAllRecords, getAllUsers, deleteRecord, deleteUser) {
+    , $window, saveUser, getAllRecords, getAllUsers, deleteRecord, deleteUser,getAllUsersRecord,NgTableParams) {
 
     $scope.pilot_name = null;
     $scope.port = null;
@@ -10,6 +10,10 @@ app.controller('serverController', function ($scope, isLogIn, startResource, sto
     $scope.saveUserRole = null;
     $scope.saveUserLogin = null;
     $scope.saveUserPassword = null;
+
+    $scope.records = this;
+    $scope.recordsData = getAllRecords.query();
+    $scope.records.tableParams = new NgTableParams({}, {dataset: $scope.recordsData});
 
     isLogedIn();
     function isLogedIn(){
@@ -113,5 +117,9 @@ app.factory('stopResource',function($resource){
 app.factory('logOut',function($resource){
     return $resource('resources/server/logout/');
 });
+app.factory('getAllUsersRecord',function($resource){
+    return $resource('/get-all-user-records/');
+});
+
 
 

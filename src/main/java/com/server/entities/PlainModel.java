@@ -8,7 +8,7 @@ import java.util.Collection;
  * Created by Maksym on 1/12/2016.
  */
 @Entity
-@Table(name="plain_model")
+@Table(name="plain_models")
 public class PlainModel implements Serializable {
 
     public PlainModel() {
@@ -26,9 +26,6 @@ public class PlainModel implements Serializable {
     @Column(name = "NAME" ,unique = true)
     private String name;
 
-    @OneToMany (mappedBy = "plainModel")
-    private Collection<Metric> metrics;
-
     public int getId() {
         return id;
     }
@@ -41,14 +38,6 @@ public class PlainModel implements Serializable {
         this.name = name;
     }
 
-    public Collection<Metric> getMetrics() {
-        return metrics;
-    }
-
-    public void setMetrics(Collection<Metric> metrics) {
-        this.metrics = metrics;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,8 +46,7 @@ public class PlainModel implements Serializable {
         PlainModel that = (PlainModel) o;
 
         if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        return metrics != null ? metrics.equals(that.metrics) : that.metrics == null;
+        return name != null ? name.equals(that.name) : that.name == null;
 
     }
 
@@ -66,7 +54,6 @@ public class PlainModel implements Serializable {
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (metrics != null ? metrics.hashCode() : 0);
         return result;
     }
 }
