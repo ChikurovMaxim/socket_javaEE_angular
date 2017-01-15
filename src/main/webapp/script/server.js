@@ -1,7 +1,7 @@
 var app = angular.module('server', ['ngTable','ngResource', 'ui.bootstrap']);
 
-app.controller('serverController', function ($scope, isLogIn, startResource, stopResource, logOut
-    , $window, saveUser, getAllRecords, getAllUsers, deleteRecord, deleteUser,getAllUsersRecord,NgTableParams) {
+app.controller('serverController', function ($scope, isLogIn, startResource, stopResource, logOut,
+             $window, saveUser, getAllRecords, getAllUsers, deleteRecord, deleteUser,getAllUsersRecord,NgTableParams) {
 
     $scope.pilot_name = null;
     $scope.port = null;
@@ -12,7 +12,9 @@ app.controller('serverController', function ($scope, isLogIn, startResource, sto
     $scope.saveUserPassword = null;
 
     $scope.records = this;
-    $scope.recordsData = getAllRecords.query();
+    // $scope.recordsData = getAllRecords.query();
+    $scope.recordsData = [{id:1,user:{name:"Maksym"},date:"2016-11-12",PLAIN_MODEL:{name:"boeing 737"}},
+    {id:2,user:{name:"Maksym"},date:"2016-11-13",PLAIN_MODEL:{name:"boeing 737"}}];
     $scope.records.tableParams = new NgTableParams({}, {dataset: $scope.recordsData});
 
     isLogedIn();
@@ -56,11 +58,6 @@ app.controller('serverController', function ($scope, isLogIn, startResource, sto
 
     $scope.getAllUsersF = function(){
         $scope.usersGet = getAllUsers.get();
-        //     .$promise.then(
-        //     function(){
-        //         $scope.usersGet =
-        //     }
-        // )
     };
 
     $scope.getAllRecordsF = function(){

@@ -3,8 +3,8 @@
              xmlns="http://xmlns.jcp.org/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="UNIT" transaction-type="JTA">
-        <jta-data-source>java:jboss/datasources/newDB</jta-data-source>
+    <persistence-unit name="UNIT" >
+        <!--<jta-data-source>java:jboss/datasources/newDB</jta-data-source>-->
         <class>com.server.entities.Record</class>
         <class>com.server.entities.Users</class>
         <class>com.server.entities.Metric</class>

@@ -32,7 +32,7 @@ public class RecordDaoImpl implements RecordDao{
     @Transactional
     public Record saveRecord(Record record) {
         Record newRec;
-        if(findRecord(record.getId())==null){
+        if(record.getId()==0){
             newRec = new Record(record.getDate(),
                     record.getSimData(),
                     record.getUser(),
@@ -54,6 +54,7 @@ public class RecordDaoImpl implements RecordDao{
     }
 
     @Override
+    @Transactional
     public Collection<Record> getAllRecords() {
         Query q = entityManager.createQuery("SELECT r FROM Record r");
         return q.getResultList();

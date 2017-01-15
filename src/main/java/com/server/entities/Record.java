@@ -2,7 +2,7 @@ package com.server.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by Maksym on 14.12.2016.
@@ -12,27 +12,28 @@ import java.time.LocalDateTime;
 public class Record implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RECORD_ID", unique = true, nullable = false)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
     private int Id;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Users.class,fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID",referencedColumnName = "ID",insertable = false)
     private Users user;
 
     @Column(name = "DATE")
-    private LocalDateTime date;
+    private Date date;
 
     @Column(name = "SIM_DATA")
     private String simData;
 
-    @Column(name = "PLAIN_MODEL")
-    private String plainModel;
+    @OneToOne
+    @JoinColumn(name="PLAIN_MODEL_ID", referencedColumnName = "ID",insertable = false)
+    private PlainModel plainModel;
 
     public Record() {
     }
 
-    public Record(LocalDateTime date, String simData, Users user, String plainModel) {
+    public Record(Date date, String simData, Users user, PlainModel plainModel) {
         this.date = date;
         this.user = user;
         this.plainModel = plainModel;
@@ -42,11 +43,11 @@ public class Record implements Serializable{
         return Id;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -66,11 +67,11 @@ public class Record implements Serializable{
         this.user = user;
     }
 
-    public String getPlainModel() {
+    public PlainModel getPlainModel() {
         return plainModel;
     }
 
-    public void setPlainModel(String plainModel) {
+    public void setPlainModel(PlainModel plainModel) {
         this.plainModel = plainModel;
     }
 

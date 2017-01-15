@@ -21,7 +21,7 @@ public class Metric implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private int id;
 
@@ -31,8 +31,8 @@ public class Metric implements Serializable {
     @Column(name = "VALUE")
     private Double value;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = PlainModel.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "PLAIN_MODEL_ID", referencedColumnName = "ID")
     private PlainModel plainModel;
 
     public int getId() {

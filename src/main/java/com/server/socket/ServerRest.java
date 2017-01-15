@@ -1,5 +1,6 @@
 package com.server.socket;
 
+import com.server.dao.PlainModelDao;
 import com.server.dao.RecordDao;
 import com.server.dao.UserDao;
 import com.server.entities.Record;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.xml.registry.infomodel.User;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
@@ -44,6 +46,10 @@ public class ServerRest extends Application {
     @EJB(name = "java:global/UserDAOImpl")
     UserDao userDao;
 
+    @EJB(name = "java:global/PlainModelDaoImpl")
+    PlainModelDao plainModelDao;
+
+
     private boolean dataFromJson(String data) {
         try {
             json = new HashMap<>();
@@ -59,8 +65,9 @@ public class ServerRest extends Application {
 
     private void enrichRecord(Users user, String plain) {
         record.setUser(user);
-        record.setDate(LocalDateTime.now());
-        record.setPlainModel(plain);
+        java.util.Date datetime = Timestamp.valueOf(LocalDateTime.now());
+        record.setDate(datetime);
+        record.setPlainModel(plainModelDao.findPlainModel(plain));
         recordDao.saveRecord(record);
     }
 

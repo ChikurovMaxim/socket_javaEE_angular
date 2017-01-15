@@ -26,8 +26,15 @@ public class PlainModelDaoImpl implements PlainModelDao {
     @Override
     @Transactional
     public PlainModel savePlain(PlainModel plainModel) {
-        PlainModel pm = new PlainModel(plainModel.getName());
-        entityManager.persist(pm);
+        PlainModel pm;
+        if(plainModel.getId()==0){
+            pm = new PlainModel(plainModel.getName());
+            entityManager.persist(pm);
+        }
+        else {
+            pm = plainModel;
+            entityManager.merge(pm);
+        }
         return pm;
     }
 
