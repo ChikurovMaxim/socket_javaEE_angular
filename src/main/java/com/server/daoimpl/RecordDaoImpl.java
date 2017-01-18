@@ -37,7 +37,7 @@ public class RecordDaoImpl implements RecordDao{
                     record.getSimData(),
                     record.getUser(),
                     record.getPlainModel());
-            entityManager.persist(newRec);
+            entityManager.merge(newRec);
         }
         else {
             newRec = record;

@@ -23,9 +23,9 @@
 <body ng-controller="plainController">
 <div class="formServer">
     <ul class="menuUl" ng-controller="menu">
-        <li id="formsLi" class="menuLi" ng-class="navClass('users')"><a href='users.html'>Users</a></li>
+        <li id="formsLi" class="menuLi" ng-class="navClass('records')"><a href='server.html'>Main</a></li>
         <li class="menuLi" ng-class="navClass('plains')"><a href='plains.html'>Plains</a></li>
-        <li class="menuLi" ng-class="navClass('records')"><a href='server.html'>Records</a></li>
+        <li class="menuLi" ng-class="navClass('users')"><a href='users.html'>Users</a></li>
         <li class="logedP" id="logedName" ng-class="navClass('logedP')">
             {{logedPerson.name}}
         </li>
@@ -46,8 +46,25 @@
         <tr ng-repeat="metric in metricData">
             <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
                 {{metric.name}}</td>
+            <td>{{metric.value}}</td>
         </tr>
     </table>
+</div>
+
+<div class="form">
+    <label>Plain model</label>
+    <input ng-model="savePlainName" type="text" name="text">
+    <button ng-click="saveUser()">Save plain model</button>
+</div>
+<div class="form">
+    <form>
+    <label for="metricName">Plain model metric</label>
+    <input ng-model="saveMetricName" type="text" name="text" id="metricName">
+    <select >
+       <option ng-repeat="plain in plainData" ng-model="savePlainMetricId" value="plain.id">{{plain.name}}</option>
+    </select>
+    <button ng-click="saveUser()">Save plain model</button>
+    </form>
 </div>
 </body>
 </html>

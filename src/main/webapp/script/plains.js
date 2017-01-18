@@ -8,9 +8,8 @@ app.controller('plainController', function (isLogIn,$window,$scope,NgTableParams
     $scope.plainData = getAllPlains.query();
     $scope.plains.tableParams = new NgTableParams({}, {dataset: $scope.plainData});
 
-
     $scope.savePlainName = null;
-
+    $scope.savePlainMetricId = null;
     $scope.saveMetricName = null;
     $scope.saveMetricValue = null;
 
@@ -18,7 +17,7 @@ app.controller('plainController', function (isLogIn,$window,$scope,NgTableParams
         $scope.plainSelected = true;
         $scope.metrics = this;
         $scope.metricData = getAllMetrics.query({id:plainId});
-        $scope.metrics.tableParams = new NgTableParams({}, {dataset: metricData});
+        $scope.metrics.tableParams = new NgTableParams({}, {dataset: $scope.metricData});
     };
 
     isLogedIn();
@@ -32,9 +31,9 @@ app.controller('plainController', function (isLogIn,$window,$scope,NgTableParams
         $scope.savePl = savePlain.save({plainName:$scope.savePlainName});
     };
 
-    $scope.savePlainMetric = function(pid){
+    $scope.savePlainMetric = function(){
         var metricJSON = {name:$scope.saveMetricName,value:$scope.saveMetricValue};
-        $scope.savePlMetr = saveMetric.save({plain:pid},metricJSON);
+        $scope.savePlMetr = saveMetric.save({plain:$scope.savePlainMetricId},metricJSON);
     };
 
     $scope.deletePlainF = function(id){

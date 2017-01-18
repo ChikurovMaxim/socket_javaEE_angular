@@ -17,7 +17,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -26,11 +25,10 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:spring-context.xml")
-public class ArticlesTopicsTest {
+public class TestClass {
 
     @Autowired
     private PlainModelDao plainModelDao;
-
     @Autowired
     private MetricsDao metricsDao;
     @Autowired
@@ -39,8 +37,6 @@ public class ArticlesTopicsTest {
     private UserDao userDAO;
 
 
-    private Metric m;
-    private Record r;
     private Users u;
     private PlainModel p;
     @Before
@@ -50,12 +46,16 @@ public class ArticlesTopicsTest {
     }
 
     @Test
-    public void test(){
+    public void checkUsers(){
+        int firstLook = userDAO.getAll().size();
         userDAO.savePerson(u);
+        assertEquals(userDAO.getAll().size(),firstLook+1);
+    }
+
+    @Test
+    public void checkPlains(){
+        int firstLook = plainModelDao.findAll().size();
         plainModelDao.savePlain(p);
-        java.util.Date datetime = Timestamp.valueOf(LocalDateTime.now());
-        r = new Record(datetime,"String",userDAO.findPerson(1),plainModelDao.findPlainModel(1));
-        recordsDAO.saveRecord(r);
-        assertEquals(recordsDAO.getAllRecords().size(),1);
+        assertEquals(plainModelDao.findAll().size(),firstLook+1);
     }
 }

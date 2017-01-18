@@ -12,11 +12,11 @@ import java.util.Date;
 public class Record implements Serializable{
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private int Id;
 
-    @ManyToOne(targetEntity = Users.class,fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Users.class,fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name = "USER_ID",referencedColumnName = "ID",insertable = false)
     private Users user;
 
@@ -26,7 +26,7 @@ public class Record implements Serializable{
     @Column(name = "SIM_DATA")
     private String simData;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="PLAIN_MODEL_ID", referencedColumnName = "ID",insertable = false)
     private PlainModel plainModel;
 

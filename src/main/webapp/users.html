@@ -24,33 +24,54 @@
 <body ng-controller="serverController">
 <div>
     <ul class="menuUl" ng-controller="menu">
-        <li id="formsLi" class="menuLi" ng-class="navClass('forms')"><a href='users.html'>Users</a></li>
-        <li class="menuLi" ng-class="navClass('articles')"><a href='plains.html'>Plains</a></li>
-        <li class="menuLi" ng-class="navClass('articles')"><a href='server.html'>Records</a></li>
+        <li id="formsLi" class="menuLi" ng-class="navClass('records')"><a href='server.html'>Main</a></li>
+        <li class="menuLi" ng-class="navClass('plains')"><a href='plains.html'>Plains</a></li>
+        <li class="menuLi" ng-class="navClass('users')"><a href='users.html'>Users</a></li>
         <li class="logedP" id="logedName" ng-class="navClass('logedP')">
             {{logedPerson.name}}</li>
-        <button  id ="logOutButton" class="loginButton" ng-click="logout()">Log Out</button>
+        <button class="menuLiR" id ="logOutButton" ng-click="logout()">Log Out</button>
     </ul>
 </div>
-<div class = "page"  ng-controller="serverController">
-    <div class="content" ng-repeat="user in users">
+<div class = "grid"  ng-controller="serverController">
+    <div class="content" ng-repeat="user in usersData" ng-click = "getUsersRecords(user.id)">
         <div class="topic">{{user.name}}</div>
         <div class="topic">{{user.role}}</div>
-        <button id="removeB" class="button" ng-click="removeUser(company.id)">Remove</button>
-        <button id="editB" class="button" ng-click="editUser(company.id)">Edit</button>
+        <button id="removeB" class="button" ng-click="removeUser(user.id)">Remove</button>
+        <button id="editB" class="button" ng-click="editUser(user.id)">Edit</button>
     </div>
 </div>
-<div ng-if="userSelected">
-    <div><h1>Records</h1>
-        <div style="margin: 5%" ng-repeat="record in recordsGet">
-            <label>Name</label>
-            <label>{{record.user_name}}</label>
-            <label>Plain</label>
-            <label>{{record.plain_model}}</label>
-            <label>Date</label>
-            <label>{{record.date}}</label>
-        </div>
-    </div>
+<div class="grid">
+    <table ng-table="records.tableParams" class="table" show-filter="true">
+        <tr ng-repeat="record in recordsData" ng-click="getRecordData(records.id)">
+            <td title="'User'">
+                {{record.user.name}}
+            </td>
+            <td title="'Date'">
+                {{record.date}}
+            </td>
+            <td title="'Plain model'">
+                {{record.PLAIN_MODEL.name}}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="form">
+    <label>NEW USER</label>
+    <form>
+    <label for="name">Name</label>
+    <input ng-model="saveUserName" type="text" name="text" id="name"><br>
+    <label for="login">Login</label>
+    <input ng-model="saveUserLogin" type="text" name="text" id="login"><br>
+    <label for="password">Password</label>
+    <input ng-model="saveUserPassword" type="text" name="text" id="password"><br>
+    <select>
+        <option ng-model="saveUserRole" value="Administrator">Administrator</option>
+        <option ng-model="saveUserRole" value="Pilot">Pilot</option>
+        <option ng-model="saveUserRole" value="Instructor">Instructor</option>
+    </select><br>
+    <button ng-click="saveUser()">Save user</button><br>
+    </form>
 </div>
 </body>
 </html>

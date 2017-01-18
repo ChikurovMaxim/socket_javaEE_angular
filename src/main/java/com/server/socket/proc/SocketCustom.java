@@ -38,10 +38,9 @@ public class SocketCustom {
         }
         return null;
     }
-
     public void stop() {
         try { if (ss != null) ss.close();}
         catch (IOException e) {e.printStackTrace();}
     }
-
 }
+

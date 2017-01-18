@@ -56,9 +56,9 @@ input, label {
 
 .form {
     width: 40%;
-    float: left;
     margin-left: 5%;
     margin-right: 5%;
+    margin-top: 5%;
     text-align: left;
 }
 
@@ -68,7 +68,6 @@ input, label {
 
 .form input {
     width: 300px;
-    float: right;
 }
 
 .form .form-group span {

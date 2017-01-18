@@ -1,7 +1,8 @@
 var app = angular.module('server', ['ngTable','ngResource', 'ui.bootstrap']);
 
-app.controller('serverController', function ($scope, isLogIn, startResource, stopResource, logOut,
-             $window, saveUser, getAllRecords, getAllUsers, deleteRecord, deleteUser,getAllUsersRecord,NgTableParams) {
+app.controller('serverController', function ($scope, isLogIn, startResource,
+             stopResource, logOut, $window, saveUser, getAllRecords, getAllUsers,
+             deleteRecord, deleteUser,getAllUsersRecord,NgTableParams) {
 
     $scope.pilot_name = null;
     $scope.port = null;
@@ -13,9 +14,13 @@ app.controller('serverController', function ($scope, isLogIn, startResource, sto
 
     $scope.records = this;
     // $scope.recordsData = getAllRecords.query();
-    $scope.recordsData = [{id:1,user:{name:"Maksym"},date:"2016-11-12",PLAIN_MODEL:{name:"boeing 737"}},
-    {id:2,user:{name:"Maksym"},date:"2016-11-13",PLAIN_MODEL:{name:"boeing 737"}}];
+    $scope.recordsData = [{id:1,user:{name:"User1"},date:"2016-11-12",PLAIN_MODEL:{name:"Plain"}},
+    {id:2,user:{name:"User1"},date:"2016-11-13",PLAIN_MODEL:{name:"Plain2"}}];
     $scope.records.tableParams = new NgTableParams({}, {dataset: $scope.recordsData});
+
+    $scope.usersData = [{id:1,name:"User1",role:"Administrator"},{id:2,name:"User2",role:"Instructor"}];
+    $scope.users = this;
+    $scope.users.tableParams = new NgTableParams({}, {dataset: $scope.usersData});
 
     isLogedIn();
     function isLogedIn(){
@@ -45,8 +50,11 @@ app.controller('serverController', function ($scope, isLogIn, startResource, sto
     };
 
     $scope.saveUser = function () {
-        var data = {role:$scope.saveUserRole,login:$scope.saveUserLogin,password:$scope.saveUserPassword};
-        $scope.saveUserP = saveUser.save({name:$scope.saveUserName},data).$promise.then(
+        var data = {role:$scope.saveUserRole,
+            login:$scope.saveUserLogin,
+            password:$scope.saveUserPassword};
+        $scope.saveUserP = saveUser.save({name:$scope.saveUserName},data)
+            .$promise.then(
             function(){
                 $scope.userSaved = true;
             },
@@ -54,6 +62,15 @@ app.controller('serverController', function ($scope, isLogIn, startResource, sto
                 $scope.userSaved = false;
             }
         );
+    };
+
+    $scope.getUsersRecords = function(id){
+        $scope.recordsGetData = getAllUsersRecord.query({id:id})
+            .$promise.then(
+            function () {
+                $scope.userSelected = true;
+            }
+        )
     };
 
     $scope.getAllUsersF = function(){
@@ -102,11 +119,11 @@ app.factory('getAllUsers',function($resource){
 app.factory('getAllRecords',function($resource){
     return $resource('resources/server/get-all-records/');
 });
-app.factory('isLogIn',function($resource){
-    return $resource('resources/server/logedIn/');
-});
 app.factory('startResource',function($resource){
     return $resource('resources/server/startData/:start');
+});
+app.factory('isLogIn',function($resource){
+    return $resource('resources/server/logedIn/');
 });
 app.factory('stopResource',function($resource){
     return $resource('resources/server/stopData/:stop');
@@ -115,7 +132,7 @@ app.factory('logOut',function($resource){
     return $resource('resources/server/logout/');
 });
 app.factory('getAllUsersRecord',function($resource){
-    return $resource('/get-all-user-records/');
+    return $resource('resources/server/get-all-user-records/:id');
 });
 
 

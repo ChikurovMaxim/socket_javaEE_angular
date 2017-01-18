@@ -31,6 +31,9 @@ import org.json.*;
 @Produces(MediaType.APPLICATION_JSON)
 public class ServerRest extends Application {
 
+    @EJB(name = "java:global/RecordDaoImpl")
+    RecordDao recordDao;
+
     private final static String PILOT_NAME = "name";
     private final static String PORT = "port";
     private final static String PLAIN_MODEL = "plain";
@@ -40,8 +43,6 @@ public class ServerRest extends Application {
     private HashMap<String, String> json = null;
 
 
-    @EJB(name = "java:global/RecordDaoImpl")
-    RecordDao recordDao;
 
     @EJB(name = "java:global/UserDAOImpl")
     UserDao userDao;
@@ -145,6 +146,12 @@ public class ServerRest extends Application {
     }
 
     @GET
+    @Path("/get-all-user-records/{id}")
+    public Collection<Record> getRecordsForUser(@PathParam("id") int id){
+        return recordDao.getRecordsForUser(userDao.findPerson(id));
+    }
+
+    @GET
     @Path("/get-all-users/")
     public Collection<Users> getAllUsers(){
         return userDao.getAll();
@@ -156,10 +163,6 @@ public class ServerRest extends Application {
         return recordDao.getAllRecords();
     }
 
-    @POST
-    @Path("/get-all-user-records")
-    public Collection<Record> getRecordsForUser(int id){
-        return recordDao.getRecordsForUser(userDao.findPerson(id));
-    }
+
 
 }
