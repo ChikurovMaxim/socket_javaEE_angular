@@ -2,29 +2,31 @@ package com.server.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
- * Created by Maksym on 1/12/2016.
+ * Created by Maksym on 19.01.2017.
  */
 @Entity
-@Table(name="plain_models")
-public class PlainModel implements Serializable {
+@Table(name = "Plains")
+public class Plains implements Serializable{
 
-    public PlainModel() {
+    public Plains(){
+
     }
 
-    public PlainModel(String name) {
+    public Plains(String name) {
         this.name = name;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
-    private int id;
+    private
+    int id;
 
-    @Column(name = "NAME" ,unique = true)
-    private String name;
+    @Column(name = "name")
+    private
+    String name;
 
     public int getId() {
         return id;
@@ -43,10 +45,9 @@ public class PlainModel implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PlainModel that = (PlainModel) o;
+        Plains plains = (Plains) o;
 
-        if (id != that.id) return false;
-        return name != null ? name.equals(that.name) : that.name == null;
+        return id == plains.id && (name != null ? name.equals(plains.name) : plains.name == null);
 
     }
 

@@ -2,7 +2,7 @@ package com.server.daoimpl;
 
 import com.server.dao.MetricsDao;
 import com.server.entities.Metric;
-import com.server.entities.PlainModel;
+import com.server.entities.Situation;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -23,7 +23,8 @@ public class MetricDaoImpl implements MetricsDao {
     @PersistenceContext(unitName = "UNIT")
     private EntityManager entityManager;
 
-    private Metric findById(int id){
+    @Override
+    public Metric findById(int id){
         Query q = entityManager.createQuery("SELECT m FROM Metric m WHERE m.id = :id" );
         q.setParameter("id", id);
         return (Metric) q.getSingleResult();
@@ -31,7 +32,7 @@ public class MetricDaoImpl implements MetricsDao {
 
     @Override
     public Metric saveMetric(Metric metric) {
-        Metric newMetric = new Metric(metric.getName(),metric.getValue(),metric.getPlainModel());
+        Metric newMetric = new Metric(metric.getName(),metric.getValue(),metric.getSituation());
         entityManager.persist(newMetric);
         return newMetric;
     }
@@ -49,32 +50,4 @@ public class MetricDaoImpl implements MetricsDao {
         return q.getResultList();
     }
 
-    @Override
-    public Metric findMetric(String name, PlainModel plainModel) {
-        String plainName = plainModel.getName();
-        Query q = entityManager.
-                createQuery("SELECT m FROM Metric m WHERE m.name = :name AND m.plainModel = :plain_name");
-        q.setParameter("name",name);
-        q.setParameter("plain_name", plainName);
-        return (Metric) q.getSingleResult();
-    }
-
-    @Override
-    public Double getStandartValue(Metric metric) {
-        return findById(metric.getId()).getValue();
-    }
-
-    @Override
-    public Collection<Metric> getPlainMetric(int id) {
-        Query q = entityManager.createQuery("SELECT m FROM Metric m WHERE m.plainModel = :plain");
-        q.setParameter("plain",id);
-        return q.getResultList();
-    }
-
-    @Override
-    public Collection<Metric> getPlainMetric(PlainModel p) {
-        Query q = entityManager.createQuery("SELECT m FROM Metric m WHERE m.plainModel = :plain");
-        q.setParameter("plain",p);
-        return q.getResultList();
-    }
 }

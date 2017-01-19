@@ -23,7 +23,7 @@
 <div class="formServer">
     <ul class="menuUl" ng-controller="menu">
         <li id="formsLi" class="menuLi" ng-class="navClass('records')"><a href='server.html'>Main</a></li>
-        <li class="menuLi" ng-class="navClass('plains')"><a href='plains.html'>Plains</a></li>
+        <li class="menuLi" ng-class="navClass('plains')"><a href='situation.html'>Plains</a></li>
         <li class="menuLi" ng-class="navClass('users')"><a href='users.html'>Users</a></li>
         <li class="logedP" id="logedName" ng-class="navClass('logedP')">
             {{logedPerson.name}}
@@ -32,7 +32,7 @@
     </ul>
 </div>
 <div class="grid">
-    <hi>Server Acts</hi>
+    <h1>Server Acts</h1>
     <label>Name</label>
     <input type="text" ng-model="pilot_name" name="text"/>
     <label>Plain</label>
@@ -43,21 +43,23 @@
     <button ng-click="stop()">Stop</button>
 </div>
 <div class="grid">
-    <table ng-table="records.tableParams" class="table" show-filter="true">
-        <tr ng-repeat="record in recordsData" ng-click="getRecordData(records.id)">
-            <td title="'User'">
-                {{record.user.name}}
+    <table ng-table="plains.tableParams" class="table" >
+        <tr ng-repeat="plain in plainsData" >
+            <td title="'Plain name'">
+                {{plain.name}}
             </td>
-            <td title="'Date'">
-                {{record.date}}
+            <td>
+                <button class="button" ng-click="removePlain(plain.id)">Remove</button>
             </td>
-            <td title="'Plain model'">
-                {{record.PLAIN_MODEL.name}}
-            </td>
+        </tr>
         </tr>
     </table>
 </div>
 
-
+<div class="form">
+    <label>Plain name</label>
+    <input ng-model="saveNewPlainName" type="text" name="text">
+    <button ng-click="savePlain()">Save Plain</button>
+</div>
 </body>
 </html>

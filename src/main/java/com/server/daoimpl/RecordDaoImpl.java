@@ -12,10 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
-import javax.xml.registry.infomodel.User;
-import java.sql.Date;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by Maksym on 14.12.2016.
@@ -36,7 +33,7 @@ public class RecordDaoImpl implements RecordDao{
             newRec = new Record(record.getDate(),
                     record.getSimData(),
                     record.getUser(),
-                    record.getPlainModel());
+                    record.getSituation());
             entityManager.merge(newRec);
         }
         else {
@@ -73,8 +70,8 @@ public class RecordDaoImpl implements RecordDao{
 
     @Override
     public Collection<Record> getRecordsForUser(Users user) {
-        Query q = entityManager.createQuery("SELECT r FROM Record r WHERE r.user = :user");
-        q.setParameter("user", user);
+        Query q = entityManager.createQuery("SELECT r FROM Record r WHERE r.user.id = :user");
+        q.setParameter("user", user.getId());
         return q.getResultList();
     }
 }

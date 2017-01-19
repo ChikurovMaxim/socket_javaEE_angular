@@ -6,7 +6,6 @@ import com.server.dao.PlainModelDao;
 import com.server.dao.RecordDao;
 import com.server.dao.UserDao;
 import com.server.entities.*;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
@@ -38,10 +34,10 @@ public class TestClass {
 
 
     private Users u;
-    private PlainModel p;
+    private Situation p;
     @Before
     public void createEnt(){
-        p = new PlainModel("Ty-135");
+        p = new Situation("Ty-135");
         u = new Users("Maksym", Role.ADMIN.getRole(),"asd","123123");
     }
 

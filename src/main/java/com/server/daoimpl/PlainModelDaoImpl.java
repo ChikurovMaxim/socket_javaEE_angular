@@ -1,8 +1,8 @@
 package com.server.daoimpl;
 
 import com.server.dao.PlainModelDao;
-import com.server.entities.Metric;
-import com.server.entities.PlainModel;
+import com.server.entities.Plains;
+import com.server.entities.Situation;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -25,14 +25,14 @@ public class PlainModelDaoImpl implements PlainModelDao {
 
     @Override
     @Transactional
-    public PlainModel savePlain(PlainModel plainModel) {
-        PlainModel pm;
-        if(plainModel.getId()==0){
-            pm = new PlainModel(plainModel.getName());
+    public Plains savePlain(Plains plains) {
+        Plains pm;
+        if(plains.getId()==0){
+            pm = new Plains(plains.getName());
             entityManager.persist(pm);
         }
         else {
-            pm = plainModel;
+            pm = plains;
             entityManager.merge(pm);
         }
         return pm;
@@ -41,7 +41,7 @@ public class PlainModelDaoImpl implements PlainModelDao {
     @Override
     @Transactional
     public void deletePlain(int plainModelId) {
-        PlainModel p = findPlainModel(plainModelId);
+        Plains p = findPlainModel(plainModelId);
         entityManager.remove(entityManager.contains(p) ? p : entityManager.merge(p));
     }
 
@@ -49,23 +49,23 @@ public class PlainModelDaoImpl implements PlainModelDao {
     @Override
     @SuppressWarnings("unchecked")
     @Transactional
-    public List<PlainModel> findAll() {
-        Query q = entityManager.createQuery("SELECT p FROM PlainModel p");
+    public List<Plains> findAll() {
+        Query q = entityManager.createQuery("SELECT p FROM Plains p");
         return q.getResultList();
     }
 
     @Override
-    public PlainModel findPlainModel(int plainModelId) {
-        Query q = entityManager.createQuery("SELECT p FROM PlainModel p WHERE p.id = :id");
+    public Plains findPlainModel(int plainModelId) {
+        Query q = entityManager.createQuery("SELECT p FROM Plains p WHERE p.id = :id");
         q.setParameter("id", plainModelId);
-        return (PlainModel) q.getSingleResult();
+        return (Plains) q.getSingleResult();
     }
 
     @Override
-    public PlainModel findPlainModel(String name) {
-        Query q = entityManager.createQuery("SELECT p FROM PlainModel p WHERE p.name = :name");
+    public Plains findPlainModel(String name) {
+        Query q = entityManager.createQuery("SELECT p FROM Plains p WHERE p.name = :name");
         q.setParameter("name", name);
-        return (PlainModel) q.getSingleResult();
+        return (Plains) q.getSingleResult();
     }
 
 }

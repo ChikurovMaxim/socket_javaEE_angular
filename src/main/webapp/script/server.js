@@ -2,7 +2,8 @@ var app = angular.module('server', ['ngTable','ngResource', 'ui.bootstrap']);
 
 app.controller('serverController', function ($scope, isLogIn, startResource,
              stopResource, logOut, $window, saveUser, getAllRecords, getAllUsers,
-             deleteRecord, deleteUser,getAllUsersRecord,NgTableParams) {
+             deleteRecord, deleteUser,getAllUsersRecord,NgTableParams,savePlain,
+             getAllPlains, getPlainById, deletePlain ) {
 
     $scope.pilot_name = null;
     $scope.port = null;
@@ -11,6 +12,10 @@ app.controller('serverController', function ($scope, isLogIn, startResource,
     $scope.saveUserRole = null;
     $scope.saveUserLogin = null;
     $scope.saveUserPassword = null;
+
+    $scope.plains = this;
+    $scope.plainsData = getAllPlains.query();
+    $scope.plains.tableParams = new NgTableParams({}, {dataset: $scope.recordsData});
 
     $scope.records = this;
     // $scope.recordsData = getAllRecords.query();
@@ -101,6 +106,15 @@ app.controller('serverController', function ($scope, isLogIn, startResource,
                 $scope.isRemovedRecord = false;
             }
         );
+    };
+
+    $scope.saveNewPlainName = null;
+    $scope.savePlain = function(name){
+        savePlain.get({plainName:name});
+    };
+
+    $scope.removePlain = function(id){
+        deletePlain.delete({delete:true},id);
     }
 
 });
@@ -135,5 +149,16 @@ app.factory('getAllUsersRecord',function($resource){
     return $resource('resources/server/get-all-user-records/:id');
 });
 
-
+app.factory('savePlain',function($resource){
+    return $resource('resources/plains/save-plain/:plainName');
+});
+app.factory('getAllPlains',function($resource){
+    return $resource('resources/plains/get-plains/');
+});
+app.factory('getPlainById',function($resource){
+    return $resource('resources/plains/get-plain-id/{id}');
+});
+app.factory('deletePlain',function($resource){
+    return $resource('resources/plains//delete-plain/:delete');
+});
 

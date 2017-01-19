@@ -14,10 +14,10 @@ public class Metric implements Serializable {
     public Metric() {
     }
 
-    public Metric(String name, Double value, PlainModel plainModel) {
+    public Metric(String name, Double value, Situation situation) {
         this.name = name;
         this.value = value;
-        this.plainModel = plainModel;
+        this.situation = situation;
     }
 
     @Id
@@ -31,9 +31,9 @@ public class Metric implements Serializable {
     @Column(name = "VALUE")
     private Double value;
 
-    @ManyToOne(targetEntity = PlainModel.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "PLAIN_MODEL_ID", referencedColumnName = "ID")
-    private PlainModel plainModel;
+    @ManyToOne(targetEntity = Situation.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "SI", referencedColumnName = "ID")
+    private Situation situation;
 
     public int getId() {
         return id;
@@ -47,12 +47,12 @@ public class Metric implements Serializable {
         this.name = name;
     }
 
-    public PlainModel getPlainModel() {
-        return plainModel;
+    public Situation getSituation() {
+        return situation;
     }
 
-    public void setPlainModel(PlainModel plainModel) {
-        this.plainModel = plainModel;
+    public void setSituation(Situation situation) {
+        this.situation = situation;
     }
 
     public Double getValue() {
@@ -73,7 +73,7 @@ public class Metric implements Serializable {
         if (id != metric.id) return false;
         if (name != null ? !name.equals(metric.name) : metric.name != null) return false;
         if (value != null ? !value.equals(metric.value) : metric.value != null) return false;
-        return plainModel != null ? plainModel.equals(metric.plainModel) : metric.plainModel == null;
+        return situation != null ? situation.equals(metric.situation) : metric.situation == null;
 
     }
 
@@ -82,7 +82,7 @@ public class Metric implements Serializable {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
-        result = 31 * result + (plainModel != null ? plainModel.hashCode() : 0);
+        result = 31 * result + (situation != null ? situation.hashCode() : 0);
         return result;
     }
 }

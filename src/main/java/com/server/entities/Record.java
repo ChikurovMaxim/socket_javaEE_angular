@@ -27,16 +27,20 @@ public class Record implements Serializable{
     private String simData;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="PLAIN_MODEL_ID", referencedColumnName = "ID",insertable = false)
-    private PlainModel plainModel;
+    @JoinColumn(name="SITUATION_ID", referencedColumnName = "ID",insertable = false)
+    private Situation situation;
+
+    @OneToOne
+    @JoinColumn(name="Plain_ID", referencedColumnName = "ID", insertable = false)
+    private Plains plains;
 
     public Record() {
     }
 
-    public Record(Date date, String simData, Users user, PlainModel plainModel) {
+    public Record(Date date, String simData, Users user, Situation situation) {
         this.date = date;
         this.user = user;
-        this.plainModel = plainModel;
+        this.situation = situation;
     }
 
     public int getId() {
@@ -67,12 +71,20 @@ public class Record implements Serializable{
         this.user = user;
     }
 
-    public PlainModel getPlainModel() {
-        return plainModel;
+    public Situation getSituation() {
+        return situation;
     }
 
-    public void setPlainModel(PlainModel plainModel) {
-        this.plainModel = plainModel;
+    public void setSituation(Situation situation) {
+        this.situation = situation;
+    }
+
+    public Plains getPlains() {
+        return plains;
+    }
+
+    public void setPlains(Plains plains) {
+        this.plains = plains;
     }
 
     @Override
@@ -86,7 +98,7 @@ public class Record implements Serializable{
         if (user != null ? !user.equals(record.user) : record.user != null) return false;
         if (date != null ? !date.equals(record.date) : record.date != null) return false;
         if (simData != null ? !simData.equals(record.simData) : record.simData != null) return false;
-        return plainModel != null ? plainModel.equals(record.plainModel) : record.plainModel == null;
+        return situation != null ? situation.equals(record.situation) : record.situation == null;
 
     }
 
@@ -96,7 +108,7 @@ public class Record implements Serializable{
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (simData != null ? simData.hashCode() : 0);
-        result = 31 * result + (plainModel != null ? plainModel.hashCode() : 0);
+        result = 31 * result + (situation != null ? situation.hashCode() : 0);
         return result;
     }
 }

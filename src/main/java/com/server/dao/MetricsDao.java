@@ -1,7 +1,7 @@
 package com.server.dao;
 
 import com.server.entities.Metric;
-import com.server.entities.PlainModel;
+import com.server.entities.Situation;
 
 import javax.ejb.Local;
 import java.util.Collection;
@@ -19,11 +19,6 @@ public interface MetricsDao {
 
     List<Metric> getAll();
 
-    Metric findMetric(String name, PlainModel plainModel);
+    Metric findById(int id);
 
-    Double getStandartValue(Metric metric);
-
-    Collection<Metric> getPlainMetric(int id);
-
-    Collection<Metric> getPlainMetric(PlainModel p);
 }

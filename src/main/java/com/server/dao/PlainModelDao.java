@@ -1,7 +1,7 @@
 package com.server.dao;
 
-import com.server.entities.Metric;
-import com.server.entities.PlainModel;
+import com.server.entities.Plains;
+import com.server.entities.Situation;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -12,14 +12,14 @@ import java.util.List;
 @Local
 public interface PlainModelDao {
 
-    PlainModel savePlain(PlainModel plainModel);
+    Plains savePlain(Plains situation);
 
     void deletePlain(int plainModelId);
 
-    List<PlainModel> findAll();
+    List<Plains> findAll();
 
-    PlainModel findPlainModel(int plainModelId);
+    Plains findPlainModel(int plainModelId);
 
-    PlainModel findPlainModel(String name);
+    Plains findPlainModel(String name);
 
 }

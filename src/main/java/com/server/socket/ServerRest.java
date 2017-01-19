@@ -2,6 +2,7 @@ package com.server.socket;
 
 import com.server.dao.PlainModelDao;
 import com.server.dao.RecordDao;
+import com.server.dao.SituationDao;
 import com.server.dao.UserDao;
 import com.server.entities.Record;
 import com.server.entities.Role;
@@ -15,7 +16,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.xml.registry.infomodel.User;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -36,7 +36,7 @@ public class ServerRest extends Application {
 
     private final static String PILOT_NAME = "name";
     private final static String PORT = "port";
-    private final static String PLAIN_MODEL = "plain";
+    private final static String PLAIN_MODEL = "situation";
 
     private Record record = new Record();
     private SocketCustom socketConnection;
@@ -47,8 +47,8 @@ public class ServerRest extends Application {
     @EJB(name = "java:global/UserDAOImpl")
     UserDao userDao;
 
-    @EJB(name = "java:global/PlainModelDaoImpl")
-    PlainModelDao plainModelDao;
+    @EJB(name = "java:global/SituationDaoImpl")
+    SituationDao situationDao;
 
 
     private boolean dataFromJson(String data) {
@@ -64,11 +64,11 @@ public class ServerRest extends Application {
         }
     }
 
-    private void enrichRecord(Users user, String plain) {
+    private void enrichRecord(Users user, int id) {
         record.setUser(user);
         java.util.Date datetime = Timestamp.valueOf(LocalDateTime.now());
         record.setDate(datetime);
-        record.setPlainModel(plainModelDao.findPlainModel(plain));
+        record.setSituation(situationDao.findSituation(id));
         recordDao.saveRecord(record);
     }
 
@@ -98,7 +98,7 @@ public class ServerRest extends Application {
     public String stop(@PathParam("stop") boolean stop) {
         if (stop) {
             socketConnection.stop();
-            enrichRecord(userDao.findUserByName(json.get(PILOT_NAME)), json.get(PLAIN_MODEL));
+            enrichRecord(userDao.findUserByName(json.get(PILOT_NAME)), Integer.parseInt(json.get(PLAIN_MODEL)));
         }
         return "Stop!";
     }
