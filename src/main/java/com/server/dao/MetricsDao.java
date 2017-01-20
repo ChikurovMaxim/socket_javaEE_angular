@@ -21,4 +21,5 @@ public interface MetricsDao {
 
     Metric findById(int id);
 
+    List<Metric> getAllBySituation(int id);
 }

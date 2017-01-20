@@ -20,7 +20,7 @@
 
     <!-- endbuild -->
 </head>
-<body ng-controller="plainController">
+<body ng-controller="situationController">
 <div class="formServer">
     <ul class="menuUl" ng-controller="menu">
         <li id="formsLi" class="menuLi" ng-class="navClass('records')"><a href='server.html'>Main</a></li>
@@ -34,7 +34,7 @@
 </div>
 <div class="grid">
     <table ng-table="situations.tableParams" class="table" show-filter="true">
-        <tr ng-repeat="situation in situationData" ng-click="getMetricsBySituation(plain.id)">
+        <tr ng-repeat="situation in situationData" ng-click="getMetricsBySituation(situation.id)">
             <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
                 {{situation.name}}
             </td>
@@ -42,11 +42,14 @@
     </table>
 </div>
 <div ng-if="situationSelected" class="grid">
-    <table ng-table="metrics.tableParams" class="table" show-filter="true">
+    <table ng-table="metrics.tableParams" class="table" >
         <tr ng-repeat="metric in metricData">
-            <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
-                {{metric.name}}</td>
-            <td>{{metric.value}}</td>
+            <td title="'Name'">
+                {{metric.name}}
+            </td>
+            <td title="'Value'">
+                {{metric.value}}
+            </td>
         </tr>
     </table>
 </div>

@@ -32,7 +32,7 @@ public class Metric implements Serializable {
     private Double value;
 
     @ManyToOne(targetEntity = Situation.class,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "SI", referencedColumnName = "ID")
+    @JoinColumn(name = "SITUATION_ID", referencedColumnName = "ID")
     private Situation situation;
 
     public int getId() {

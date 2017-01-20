@@ -33,9 +33,6 @@ public class Situation implements Serializable {
         return id;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "situation")
-    private Collection<Metric> metricCollection;
-
     public String getName() {
         return name;
     }
@@ -52,14 +49,6 @@ public class Situation implements Serializable {
         this.desc = desc;
     }
 
-    public Collection<Metric> getMetricCollection() {
-        return metricCollection;
-    }
-
-    public void setMetricCollection(Collection<Metric> metricCollection) {
-        this.metricCollection = metricCollection;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,7 +58,7 @@ public class Situation implements Serializable {
 
         if (id != situation.id) return false;
         if (name != null ? !name.equals(situation.name) : situation.name != null) return false;
-        return metricCollection != null ? metricCollection.equals(situation.metricCollection) : situation.metricCollection == null;
+        return desc != null ? desc.equals(situation.desc) : situation.desc == null;
 
     }
 
@@ -77,7 +66,7 @@ public class Situation implements Serializable {
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (metricCollection != null ? metricCollection.hashCode() : 0);
+        result = 31 * result + (desc != null ? desc.hashCode() : 0);
         return result;
     }
 }

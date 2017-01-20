@@ -34,10 +34,10 @@ public class TestClass {
 
 
     private Users u;
-    private Situation p;
+    private Plains p;
     @Before
     public void createEnt(){
-        p = new Situation("Ty-135");
+        p = new Plains("Ty-135");
         u = new Users("Maksym", Role.ADMIN.getRole(),"asd","123123");
     }
 

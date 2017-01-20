@@ -31,6 +31,13 @@ public class MetricDaoImpl implements MetricsDao {
     }
 
     @Override
+    public List<Metric> getAllBySituation(int id) {
+        Query q = entityManager.createQuery("SELECT m FROM Metric m WHERE m.situation.id = :id");
+        q.setParameter("id", id);
+        return q.getResultList();
+    }
+
+    @Override
     public Metric saveMetric(Metric metric) {
         Metric newMetric = new Metric(metric.getName(),metric.getValue(),metric.getSituation());
         entityManager.persist(newMetric);

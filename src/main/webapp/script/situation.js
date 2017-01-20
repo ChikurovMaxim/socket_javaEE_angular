@@ -1,7 +1,7 @@
 var app = angular.module('server', ['ngTable','ngResource', 'ui.bootstrap']);
 
 app.controller('situationController', function (isLogIn,$window,$scope,NgTableParams,deleteSituation,deleteMetric,
-                                            saveSituation,saveMetric,getAllSituations,getAllMetrics) {
+                                            saveSituation,saveMetric,getAllSituations,getAllSituationMetrics) {
 
     $scope.situationSelected = false;
     $scope.situations = this;
@@ -17,7 +17,7 @@ app.controller('situationController', function (isLogIn,$window,$scope,NgTablePa
     $scope.getMetricsBySituation = function(situationId) {
         $scope.situationSelected = true;
         $scope.metrics = this;
-        $scope.metricData = getAllMetrics.query({id:situationId});
+        $scope.metricData = getAllSituationMetrics.query({id:situationId});
         $scope.metrics.tableParams = new NgTableParams({}, {dataset: $scope.metricData});
     };
 
@@ -47,22 +47,22 @@ app.controller('situationController', function (isLogIn,$window,$scope,NgTablePa
     }
 });
 app.factory('deleteSituation',function($resource){
-    return $resource('resources/situation-metric/delete-situation/:delete');
+    return $resource('resources/situationmetric/delete-situation/:delete');
 });
 app.factory('deleteMetric',function($resource){
-    return $resource('resources/situation-metric/delete-situation-metric/:delete');
+    return $resource('resources/situationmetric/delete-situation-metric/:delete');
 });
 app.factory('saveSituation',function($resource){
-    return $resource('resources/situation-metric/save-situation/:situationName');
+    return $resource('resources/situationmetric/save-situation/:situationName');
 });
 app.factory('saveMetric',function($resource){
-    return $resource('resources/situation-metric/save-metric/:situation');
+    return $resource('resources/situationmetric/save-metric/:situation');
 });
 app.factory('getAllSituations',function($resource){
-    return $resource('resources/situation-metric/get-situations');
+    return $resource('resources/situationmetric/get-situations');
 });
-app.factory('getAllMetrics',function($resource){
-    return $resource('resources/situation-metric/get-situation-metrics/:id');
+app.factory('getAllSituationMetrics',function($resource){
+    return $resource('resources/situationmetric/get-situation-metrics/:id');
 });
 app.factory('isLogIn',function($resource){
     return $resource('resources/server/logedIn/');

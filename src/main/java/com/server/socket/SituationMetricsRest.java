@@ -25,7 +25,7 @@ import org.json.*;
  */
 @Stateless
 @ApplicationPath("/resources")
-@Path("/situation-metric")
+@Path("/situationmetric")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class SituationMetricsRest extends Application {
@@ -52,7 +52,7 @@ public class SituationMetricsRest extends Application {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public List<Metric> getSituationMetrics(@PathParam("id") int id) {
-        return (List<Metric>) situationDao.findSituationMetrics(id);
+        return situationDao.findSituationMetrics(id);
     }
 
     @POST

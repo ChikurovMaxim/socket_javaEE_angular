@@ -33,33 +33,40 @@
         <button class="menuLiR" id="logOutButton" ng-click="logout()">Log Out</button>
     </ul>
 </div>
-<div class="grid" ng-controller="serverController">
-    <div class="content" ng-repeat="user in usersData" ng-click="getUsersRecords(user.id)">
-        <div class="topic">{{user.name}}</div>
-        <div class="topic">{{user.role}}</div>
-        <button id="removeB" class="button" ng-click="removeUser(user.id)">Remove</button>
-        <button id="editB" class="button" ng-click="editUser(user.id)">Edit</button>
+<div  ng-controller="serverController">
+    <div class="grid">
+        <div class="content" ng-repeat="user in usersData" ng-click="getUsersRecords(user.id)">
+            <div class="topic">{{user.name}}</div>
+            <div class="topic">{{user.role}}</div>
+            <button id="removeB" class="button" ng-click="removeUser(user.id)">Remove</button>
+            <button id="editB" class="button" ng-click="editUser(user.id)">Edit</button>
+        </div>
+    </div>
+    <div class="grid">
+        <table ng-table="records.tableParams" class="table">
+            <tr ng-repeat="s in recordsData">
+                <td title="'User'">
+                    {{s.user.name}}
+                </td>
+                <td title="'Date'">
+                    {{s.date | date:'dd/MM/yyyy'}}
+                </td>
+                <td title="'Situation'">
+                    {{s.situation.name}}
+                </td>
+                <td title="'Plain model'">
+                    {{s.plains.name}}
+                </td>
+                <td title="'Metric results'">
+                    {{s.simData}}
+                </td>
+                <td>
+                    <button class="button" ng-click="deleteRecordF(record.id)">Remove</button>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
-<div class="grid">
-    <table ng-table="records.tableParams" class="table" show-filter="true">
-        <td ng-repeat="record in recordsData" ng-click="getRecordData(records.id)">
-        <td title="'User'">
-            {{record.user.name}}
-        </td>
-        <td title="'Date'">
-            {{record.date}}
-        </td>
-        <td title="'Plain model'">
-            {{record.PLAIN_MODEL.name}}
-        </td>
-        <td>
-            <button class="button" ng-click="deleteRecordF(record.id)">Remove</button>
-        </td>
-        </tr>
-    </table>
-</div>
-
 <div class="form">
     <label>NEW USER</label>
     <form>

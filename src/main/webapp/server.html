@@ -23,7 +23,7 @@
 <div class="formServer">
     <ul class="menuUl" ng-controller="menu">
         <li id="formsLi" class="menuLi" ng-class="navClass('records')"><a href='server.html'>Main</a></li>
-        <li class="menuLi" ng-class="navClass('plains')"><a href='situation.html'>Plains</a></li>
+        <li class="menuLi" ng-class="navClass('plains')"><a href='situation.html'>Situations</a></li>
         <li class="menuLi" ng-class="navClass('users')"><a href='users.html'>Users</a></li>
         <li class="logedP" id="logedName" ng-class="navClass('logedP')">
             {{logedPerson.name}}
@@ -51,7 +51,6 @@
             <td>
                 <button class="button" ng-click="removePlain(plain.id)">Remove</button>
             </td>
-        </tr>
         </tr>
     </table>
 </div>

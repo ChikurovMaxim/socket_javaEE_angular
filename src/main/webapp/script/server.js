@@ -1,9 +1,9 @@
-var app = angular.module('server', ['ngTable','ngResource', 'ui.bootstrap']);
+var app = angular.module('server', ['ngTable', 'ngResource', 'ui.bootstrap']);
 
 app.controller('serverController', function ($scope, isLogIn, startResource,
-             stopResource, logOut, $window, saveUser, getAllRecords, getAllUsers,
-             deleteRecord, deleteUser,getAllUsersRecord,NgTableParams,savePlain,
-             getAllPlains, getPlainById, deletePlain ) {
+                                             stopResource, logOut, $window, saveUser, getAllRecords, getAllUsers,
+                                             deleteRecord, deleteUser, getAllUsersRecord, NgTableParams, savePlain,
+                                             getAllPlains, getPlainById, deletePlain) {
 
     $scope.pilot_name = null;
     $scope.port = null;
@@ -12,31 +12,31 @@ app.controller('serverController', function ($scope, isLogIn, startResource,
     $scope.saveUserRole = null;
     $scope.saveUserLogin = null;
     $scope.saveUserPassword = null;
+    $scope.userSelected = false;
 
     $scope.plains = this;
-    $scope.plainsData = getAllPlains.query();
-    $scope.plains.tableParams = new NgTableParams({}, {dataset: $scope.recordsData});
+    getAllPlains.query().$promise.then(
+        function (data) {
+            $scope.plainsData = angular.fromJson(data);
+            $scope.plains.tableParams = new NgTableParams({}, {dataset: $scope.plainsData });
+        }
+    );
 
-    $scope.records = this;
-    // $scope.recordsData = getAllRecords.query();
-    $scope.recordsData = [{id:1,user:{name:"User1"},date:"2016-11-12",PLAIN_MODEL:{name:"Plain"}},
-    {id:2,user:{name:"User1"},date:"2016-11-13",PLAIN_MODEL:{name:"Plain2"}}];
-    $scope.records.tableParams = new NgTableParams({}, {dataset: $scope.recordsData});
 
-    $scope.usersData = [{id:1,name:"User1",role:"Administrator"},{id:2,name:"User2",role:"Instructor"}];
+    $scope.usersData = [{id: 1, name: "User1", role: "Administrator"}, {id: 2, name: "User2", role: "Instructor"}];
     $scope.users = this;
     $scope.users.tableParams = new NgTableParams({}, {dataset: $scope.usersData});
 
     isLogedIn();
-    function isLogedIn(){
+    function isLogedIn() {
         $scope.logedPerson = isLogIn.get();
-        if($scope.logedPerson === null)$window.location.href = '../socket-1.0-SNAPSHOT/login.html';
+        if ($scope.logedPerson === null)$window.location.href = '../socket-1.0-SNAPSHOT/login.html';
     }
 
     $scope.start = function () {
-        $scope.data = {name:$scope.pilot_name,port:$scope.port,plain:$scope.plain};
-        $scope.start = startResource.save({start:true},$scope.data).$promise.then(
-            function(){
+        $scope.data = {name: $scope.pilot_name, port: $scope.port, plain: $scope.plain};
+        $scope.start = startResource.save({start: true}, $scope.data).$promise.then(
+            function () {
                 $scope.isRun = true;
             },
             function () {
@@ -46,119 +46,130 @@ app.controller('serverController', function ($scope, isLogIn, startResource,
     };
 
     $scope.stop = function () {
-        $scope.start = stopResource.get({stop:true});
+        $scope.start = stopResource.get({stop: true});
     };
 
-    $scope.logOutF = function (){
+    $scope.logOutF = function () {
         logOut.get();
         $window.location.href = '../socket-1.0-SNAPSHOT/login.html';
     };
 
     $scope.saveUser = function () {
-        var data = {role:$scope.saveUserRole,
-            login:$scope.saveUserLogin,
-            password:$scope.saveUserPassword};
-        $scope.saveUserP = saveUser.save({name:$scope.saveUserName},data)
+        var data = {
+            role: $scope.saveUserRole,
+            login: $scope.saveUserLogin,
+            password: $scope.saveUserPassword
+        };
+        $scope.saveUserP = saveUser.save({name: $scope.saveUserName}, data)
             .$promise.then(
-            function(){
-                $scope.userSaved = true;
-            },
-            function () {
-                $scope.userSaved = false;
+                function () {
+                    $scope.userSaved = true;
+                },
+                function () {
+                    $scope.userSaved = false;
+                }
+            );
+    };
+
+    $scope.getUsersRecords = function (id) {
+        getAllUsersRecord.query({id:id}).$promise.then(
+            function (data) {
+                $scope.recordsData = angular.fromJson(data);
             }
         );
     };
 
-    $scope.getUsersRecords = function(id){
-        $scope.recordsGetData = getAllUsersRecord.query({id:id})
-            .$promise.then(
-            function () {
-                $scope.userSelected = true;
-            }
-        )
-    };
-
-    $scope.getAllUsersF = function(){
+    $scope.getAllUsersF = function () {
         $scope.usersGet = getAllUsers.get();
     };
 
-    $scope.getAllRecordsF = function(){
+    $scope.getAllRecordsF = function () {
         $scope.recordsGet = getAllRecords.get();
     };
 
-    $scope.deleteUserF = function (userId){
-        deleteUser.delete({id:userId}).$promise.then(
+    $scope.deleteUserF = function (userId) {
+        deleteUser.delete({id: userId}).$promise.then(
             function () {
                 $scope.isRemovedUser = true;
             },
-            function(){
+            function () {
                 $scope.isRemovedUser = false;
             }
         );
     };
 
-    $scope.deleteRecordF = function (recordId){
-        deleteRecord.delete({id:recordId}).$promise.then(
+    $scope.deleteRecordF = function (recordId) {
+        deleteRecord.delete({id: recordId}).$promise.then(
             function () {
                 $scope.isRemovedRecord = true;
             },
-            function(){
+            function () {
                 $scope.isRemovedRecord = false;
             }
         );
     };
 
     $scope.saveNewPlainName = null;
-    $scope.savePlain = function(name){
-        savePlain.get({plainName:name});
+    $scope.savePlain = function (name) {
+        savePlain.get({plainName: name});
     };
 
-    $scope.removePlain = function(id){
-        deletePlain.delete({delete:true},id);
+    $scope.removePlain = function (id) {
+        deletePlain.delete({delete: true}, id);
     }
 
 });
-app.factory('deleteRecord',function($resource){
+app.factory('deleteRecord', function ($resource) {
     return $resource('resources/server/delete-record/:id');
 });
-app.factory('deleteUser',function($resource){
+app.factory('deleteUser', function ($resource) {
     return $resource('resources/server/delete-user/:id');
 });
-app.factory('saveUser',function($resource){
+app.factory('saveUser', function ($resource) {
     return $resource('resources/server/user-save/:name');
 });
-app.factory('getAllUsers',function($resource){
+app.factory('getAllUsers', function ($resource) {
     return $resource('resources/server/get-all-users/');
 });
-app.factory('getAllRecords',function($resource){
+app.factory('getAllRecords', function ($resource) {
     return $resource('resources/server/get-all-records/');
 });
-app.factory('startResource',function($resource){
+app.factory('startResource', function ($resource) {
     return $resource('resources/server/startData/:start');
 });
-app.factory('isLogIn',function($resource){
+app.factory('isLogIn', function ($resource) {
     return $resource('resources/server/logedIn/');
 });
-app.factory('stopResource',function($resource){
+app.factory('stopResource', function ($resource) {
     return $resource('resources/server/stopData/:stop');
 });
-app.factory('logOut',function($resource){
+app.factory('logOut', function ($resource) {
     return $resource('resources/server/logout/');
 });
-app.factory('getAllUsersRecord',function($resource){
-    return $resource('resources/server/get-all-user-records/:id');
+app.factory('getAllUsersRecord', function ($resource) {
+    return $resource('resources/server/get-all-user-records/:id',{},
+        {
+            'query':{
+                method:'GET',isArray: true
+            }
+        });
 });
 
-app.factory('savePlain',function($resource){
+app.factory('savePlain', function ($resource) {
     return $resource('resources/plains/save-plain/:plainName');
 });
-app.factory('getAllPlains',function($resource){
-    return $resource('resources/plains/get-plains/');
+app.factory('getAllPlains', function ($resource) {
+    return $resource('resources/plains/get-plains/',{},
+        {
+            'query':{
+                method:'GET',isArray: true
+            }
+        });
 });
-app.factory('getPlainById',function($resource){
+app.factory('getPlainById', function ($resource) {
     return $resource('resources/plains/get-plain-id/{id}');
 });
-app.factory('deletePlain',function($resource){
+app.factory('deletePlain', function ($resource) {
     return $resource('resources/plains//delete-plain/:delete');
 });
 
